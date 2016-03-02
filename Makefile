@@ -5,3 +5,6 @@ sass: $(shell find sass/)
 
 run-ui:
 	browser-sync start --server public --files "public/**.*"
+
+build-html:
+	node_modules/metalsmith/bin/metalsmith && cp html_build/*.html public/

@@ -1,0 +1,12 @@
+{
+  "source": "html_src",
+  "destination": "html_build",
+  "plugins": {
+    "metalsmith-layouts": {
+        "engine": "handlebars",
+        "directory": "layouts",
+        "partials": "partials",
+        "rename": true
+    }
+  }
+}
