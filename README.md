@@ -3,13 +3,13 @@ Prereqs:
 1. Install Sass: <code>gem install sass.</code>
 1. Install NPM (comes bundled with nodejs)
 1. Install handlebars: <code>npm install handlebars</code>
-1. Install metalsmith deps: <code>npm install metalsmith metalsmith-layouts</code>
-1. (Optional) Install browser-sync <code>sudo npm install browser-sync -g</code>
+1. Install metalsmith deps: <code>npm install metalsmith metalsmith-layouts metalsmith-watch</code>
+1. Install browser-sync <code>sudo npm install browser-sync -g</code>
 
 Building:
 ==========
-1. Compile the materialize css: <code>make</code>
-1. Run the client code in the test server: <code>make run</code>
+1. Compile the materialize css: <code>make</code> _The output of make will state that files are being watched. This is only to regenerate the html in public/app. It has nothing to do with browser reloads. Browser reloading is handled by browser sync._
+1. run the client code in the test server: <code>make run</code>
 
 Materialize
 ===========
