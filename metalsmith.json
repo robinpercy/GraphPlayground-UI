@@ -1,12 +1,19 @@
 {
   "source": "html_src",
-  "destination": "html_build",
+  "destination": "public/app/",
   "plugins": {
     "metalsmith-layouts": {
         "engine": "handlebars",
         "directory": "layouts",
         "partials": "partials",
         "rename": true
+    },
+    "metalsmith-watch": {
+        "paths": {
+            "partials/**/*": "**/*",
+            "layouts/**/*": "**/*",
+            "${source}/**/*": true
+        }
     }
   }
 }

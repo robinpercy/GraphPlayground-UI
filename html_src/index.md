@@ -1,4 +1,4 @@
 ---
 layout: layout.html
-title: This is my new Title!!
+title: My Oh My Title!!
 ---
