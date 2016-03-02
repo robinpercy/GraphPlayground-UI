@@ -8,8 +8,8 @@ Prereqs:
 
 Building:
 ==========
-1. Compile the materialize css: <code>make sass</code>
-1. Run the client code in the test server: <code>make run-ui</code>
+1. Compile the materialize css: <code>make</code>
+1. Run the client code in the test server: <code>make run</code>
 
 Materialize
 ===========
