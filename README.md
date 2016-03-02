@@ -2,12 +2,12 @@ Prereqs:
 ========
 1. Install Sass: <code>gem install sass.</code>
 1. (Optional) Install NPM (comes bundled with nodejs):  
-1. (Optional) Install http-server: <code>sudo npm install http-server -g<code>
+1. (Optional) Install browser-sync <code>sudo npm install browser-sync -g<code>
 
 Building:
 ==========
 1. Compile the materialize css: <code>make sass</code>
-1. Run the client code in the test server: <code>http-server -p 9999</code>
+1. Run the client code in the test server: <code>make run-ui</code>
 
 Materialize
 ===========
@@ -20,4 +20,4 @@ This project uses Materialize v0.97.4. The following files and directories shoul
 - sass/materilize.scss
 - sass/components/
 
-**Note: the non-minimized js file has been included to help with debugging.**
+**Note: the non-minimized js file has been included  to help with debugging.**
