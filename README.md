@@ -35,3 +35,4 @@ summary:
 - Our configuration specifies the partials directory as the source for partial templates.
 - Each markdown file in html_src represents one page to be rendered and specifies the values to be subbed into that page. The one special value required is the **layout**, which determines the layout html that should be applied.
 - Any partials included in a layout will be loaded from the partials directory.
+- metalsmith-watch is configured to watch for any changes in the html_src, layout, or partials directories and to kickoff a rebuild when necessary. Note that all but the html_src dir needs to be set to rebuild all (\*\*/\*) otherwise they will be treated as source files (instead of templates)
