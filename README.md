@@ -1,10 +1,10 @@
 Prereqs:
 ========
 1. Install Sass: <code>gem install sass.</code>
-1. Install NPM (comes bundled with nodejs):  
+1. Install NPM (comes bundled with nodejs)
 1. Install handlebars: <code>npm install handlebars</code>
-1. Install metalsmith deps: <code>npm install metalsmith metalsmith-layouts<code>
-1. (Optional) Install browser-sync <code>sudo npm install browser-sync -g<code>
+1. Install metalsmith deps: <code>npm install metalsmith metalsmith-layouts</code>
+1. (Optional) Install browser-sync <code>sudo npm install browser-sync -g</code>
 
 Building:
 ==========
