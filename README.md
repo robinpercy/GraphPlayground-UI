@@ -2,14 +2,23 @@ Prereqs:
 ========
 1. Install Sass: <code>gem install sass.</code>
 1. Install NPM (comes bundled with nodejs)
+1. Install bower: <code>npm install bower</code>
 1. Install handlebars: <code>npm install handlebars</code>
 1. Install metalsmith deps: <code>npm install metalsmith metalsmith-layouts metalsmith-watch</code>
 1. Install browser-sync <code>sudo npm install browser-sync -g</code>
+1. Install cytoscpae and cytoscape-edgehandles: <code>node_modules/bower/bin/bower install cytoscape cytoscape-edgehandles</code>
+1. Copy cytoscape.min.js and cytoscape-edgehandles.js from bower_components/** into public/js
 
 Building:
 ==========
 1. Compile the materialize css: <code>make</code> _The output of make will state that files are being watched. This is only to regenerate the html in public/app. It has nothing to do with browser reloads. Browser reloading is handled by browser sync._
 1. run the client code in the test server: <code>make run</code>
+
+Notes on Cytoscape.js:
+===================
+1. First off, don't confuse docs for Cytoscape with Cytoscape.js, the former is a Java implementation.
+1. Cytoscape.js implements its own event handling and styling model. It's similar to JS and CSS.
+1. Changing the style of a node is done by defining a style in the config, with a unique selector, then adding classes to the node(s) to be styled that make them match the appropriate selector
 
 Materialize
 ===========
