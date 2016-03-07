@@ -1,0 +1,165 @@
+
+  <div class="fixed-action-btn horizontal click-to-toggle" style="top: 75px; right: 24px; height: 1px;">
+    <a class="btn-floating btn-large blue">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a id='delete-btn' class="btn-floating red"><i class="material-icons">delete</i></a></li>
+      <li><a class="btn-floating yellow darken-1 modal-trigger" href="#modal1"><i class="material-icons">color_lens</i></a></li>
+    </ul>
+  </div>
+
+  <!-- Modal Structure -->
+ <div id="modal1" class="modal bottom-sheet">
+   <div class="modal-content">
+     <h5>Choose a Color</h5>
+     <p>Choose a color below to start coloring elemens in the graph (click/tap an element to color it). To stop coloring, choose the cancel icon.</p>
+     <div class="horizontal color-select" >
+         <a class="btn-floating btn-large black modal-close waves-effect" data-color="#000">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large white modal-close waves-effect" data-color="#fff">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large red modal-close waves-effect" data-color="#F44336">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large blue modal-close waves-effect" data-color="#2196F3">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large green modal-close waves-effect" data-color="#4CAF50">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large yellow modal-close waves-effect" data-color="#ffeb3b">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large purple modal-close waves-effect" data-color="#9c27b0">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large brown modal-close waves-effect" data-color="#795548">
+           <i class="large material-icons"></i>
+         </a>
+         <a class="btn-floating btn-large white modal-close waves-effect" data-color="cancel">
+           <i class="large material-icons" style="color:red; font-size:32pt">not_interested</i>
+         </a>
+     </div>
+   </div>
+   <div class="modal-footer">
+     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+   </div>
+ </div>
+
+
+<div id="graph-panel" >
+</div>
+
+<div class="right" style='top: 20px;display:inline-block; position:relative'>
+        <div class="red" style="display:inline-block; border-radius:50%; width:20px;height:20px"></div>
+        <div style='margin-right: 10px; position:relative; top:-5px; display:inline-block;'>Coloring: off</div>
+</div>
+<div style='clear:both'></div>
+
+<script type="text/javascript" >
+var cy;
+
+var coloring = false;
+var selected_color = "#000";
+
+$(function() {
+    var $panel = $('#graph-panel');
+    cy = cytoscape({
+        container: $panel,
+        style: [ // the stylesheet for the graph
+            {
+                selector: 'node',
+                style: {
+                    'background-color': '#fff',
+                    'label': 'data(name)',
+                    'border-width': 1,
+                    'border-color': '#444'
+                }
+            },
+            {
+                selector: 'node:selected',
+                style: {
+                    'border-width': 4,
+                    'border-color': '#f90',
+                    'label': 'data(name)'
+                }
+            },
+
+            {
+                selector: 'edge',
+                style: {
+                    'width': 3,
+                    'line-color': '#ccc',
+                    'target-arrow-color': '#ccc'
+                }
+            },
+            {
+                selector: 'edge:selected',
+                style: {
+                    'width': 5,
+                    'line-color': '#f90'
+                }
+            },
+
+        ],
+
+        layout: {
+            name: 'grid',
+            rows: 1
+        }
+    });
+
+    cy.edgehandles({handleSize:20, handleColor:"#666"});
+
+    cy.on('tap', function(e) {
+        // shiftKey will be held down if this is a box select
+        // non-canvas targets will be menu items
+        if (e.cyTarget === e.cy && !e.originalEvent.shiftKey
+            && e.originalEvent.target.tagName.toLowerCase() === 'canvas') {
+            var created = e.cy.add({group: "nodes", position:e.cyPosition});
+            created.style({backgroundColor:selected_color});
+        }
+    });
+
+    cy.on('tap', function(e) {
+        if (e.cyTarget !== e.cy) {
+            if (coloring) {
+                e.cyTarget.style({backgroundColor: selected_color, lineColor: selected_color});
+            } else {
+                e.cyTarget.select();
+            }
+        }
+    })
+
+    $(document).keydown(function(e) {
+        if (e.keyCode == 88) {
+            removeSelected();
+        }
+    });
+
+    $("#delete-btn").on('click', function() {
+        removeSelected();
+    });
+
+    function removeSelected() {
+        cy.remove(cy.$(":selected"));
+    }
+
+    $('.modal-trigger').leanModal();
+
+    $('.color-select a').on('click', function(e) {
+        selected_color = $(e.target).data("color")
+
+        if (selected_color === "cancel") {
+            coloring = false;
+        } else {
+            coloring = true;
+        }
+    });
+
+});
+
+</script>
