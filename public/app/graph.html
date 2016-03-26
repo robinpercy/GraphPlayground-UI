@@ -151,10 +151,14 @@
             }
         });
     
-        cy.on('tap', function(e) {
-            if (e.cyTarget !== e.cy) {
-                if (coloring) {
-                    e.cyTarget.style({backgroundColor: selected_color, lineColor: selected_color});
+        cy.on('tap', 'node, edge', function(e) {
+            if (coloring) {
+                e.cyTarget.style({backgroundColor: selected_color, lineColor: selected_color});
+            } else {
+                if (e.originalEvent.shiftKey) {
+                    var selected = cy.collection(':selected');
+                    selected.add(e.tyTarget);
+                    selected.select();
                 } else {
                     e.cyTarget.select();
                 }
@@ -162,8 +166,9 @@
         })
     
         $(document).keydown(function(e) {
-            if (e.keyCode == 88) {
+            if (e.keyCode == 46 || e.keyCode == 8) {
                 removeSelected();
+                e.preventDefault();
             }
         });
     
