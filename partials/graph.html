@@ -40,22 +40,40 @@
            <i class="large material-icons"></i>
          </a>
          <a class="btn-floating btn-large white modal-close waves-effect" data-color="cancel">
-           <i class="large material-icons" style="color:red; font-size:32pt">not_interested</i>
+           <i class="large material-icons" style="color:red; font-size:32pt" data-color="cancel">not_interested</i>
          </a>
      </div>
    </div>
    <div class="modal-footer">
-     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
    </div>
  </div>
 
+  <!-- Modal Structure -->
+ <div id="node-modal" class="modal bottom-sheet">
+   <div class="modal-content">
+       <div class="row">
+           <form class="col s12">
+             <div class="row">
+               <div class="input-field col s6">
+                 <input placeholder="Name" id="ele-name" type="text" class="validate">
+                 <label for="ele-name">Name</label>
+               </div>
+           </div>
+           </form>
+      </div>
+   </div>
+   <div class="modal-footer">
+       <a href="#!" class="modal-action modal-close waves-effect waves-red white btn-flat">Cancel</a>
+       <a href="#!" id='save-ele' class="modal-action waves-effect waves-green btn green lighten-3 btn-flat">Ok</a>
+   </div>
+ </div>
 
 <div id="graph-panel" >
 </div>
 
 <div class="right" style='top: 20px;display:inline-block; position:relative'>
-        <div class="red" style="display:inline-block; border-radius:50%; width:20px;height:20px"></div>
-        <div style='margin-right: 10px; position:relative; top:-5px; display:inline-block;'>Coloring: off</div>
+        <div style='position:relative; top:-5px; display:inline-block;'>Coloring: <span id="color-off">off</span></div>
+        <div id='color-indicator' style="background-color:#fff; display:inline-block; border-radius:50%; width:20px;height:20px; margin-right:10px"></div>
 </div>
 <div style='clear:both'></div>
 
@@ -64,6 +82,7 @@ var cy;
 
 var coloring = false;
 var selected_color = "#000";
+var overrideDelete = true;
 
 $(function() {
     var $panel = $('#graph-panel');
@@ -111,7 +130,6 @@ $(function() {
             rows: 1
         }
     });
-
     cy.edgehandles({handleSize:20, handleColor:"#666"});
 
     cy.on('tap', function(e) {
@@ -136,10 +154,28 @@ $(function() {
                 e.cyTarget.select();
             }
         }
-    })
+    });
+
+    cy.on('taphold', 'node, edge', function(e) {
+        var $modal = $("#node-modal");
+        $modal.openModal(
+            {
+                dismissible: false,
+                ready: function() {
+                    name = cy.$("#"+e.cyTarget.id()).data("name");
+                    $modal.find(".btn").css('color', 'black');
+                    $modal.find("#ele-name").val(name + "abcd");
+                    overrideDelete = false;
+                },
+                complete: function() {
+                    overrideDelete = true;
+                }
+            }
+        );
+    });
 
     $(document).keydown(function(e) {
-        if (e.keyCode == 46 || e.keyCode == 8) {
+        if (overrideDelete && (e.keyCode == 46 || e.keyCode == 8)) {
             removeSelected();
             e.preventDefault();
         }
@@ -159,8 +195,12 @@ $(function() {
         selected_color = $(e.target).data("color")
 
         if (selected_color === "cancel") {
+            $("#color-indicator").css("background-color", "#ffffff");
+            $("#color-off").removeClass("hide");
             coloring = false;
         } else {
+            $("#color-off").addClass("hide");
+            $("#color-indicator").css("background-color", selected_color);
             coloring = true;
         }
     });
